@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="view_categories">View categories</string>
+    <string name="search_product">Search a product</string>
+    <string name="search_a_product">Search a product</string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="wait_label">Loading...</string>
+</resources>
