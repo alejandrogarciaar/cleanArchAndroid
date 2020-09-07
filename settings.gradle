@@ -1,0 +1,7 @@
+include ':domain'
+include ':usecases'
+include ':data'
+include ':presentation'
+include ':remoteData'
+include ':app'
+rootProject.name = "CleanArch"
