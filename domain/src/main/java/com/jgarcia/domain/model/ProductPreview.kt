@@ -1,4 +1,3 @@
 package com.jgarcia.domain.model
 
-class ProductPreview {
-}
+data class ProductPreview(val title: String)

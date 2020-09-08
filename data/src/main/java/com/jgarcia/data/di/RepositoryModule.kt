@@ -1,28 +1,32 @@
 package com.jgarcia.data.di
 
+import com.jgarcia.data.datasource.CategoryRemoteDataSource
 import com.jgarcia.data.datasource.ProductRemoteDataSource
+import com.jgarcia.data.datasource.impl.CategoryRemoteDataSourceImpl
 import com.jgarcia.data.datasource.impl.ProductRemoteDataSourceImpl
-import com.jgarcia.data.mappers.ProductDetailMapper
-import com.jgarcia.data.mappers.ProductPreviewMapper
+import com.jgarcia.data.repositories.CategoryRepository
 import com.jgarcia.data.repositories.ProductRepository
+import com.jgarcia.data.repositories.impl.CategoryRepositoryImpl
 import com.jgarcia.data.repositories.impl.ProductRepositoryImpl
-import com.jgarcia.remotedata.api.ProductApi
-import org.koin.dsl.module
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 
-val repositoryModule = module {
-    // mappers
-    factory { ProductPreviewMapper() }
-    factory { ProductDetailMapper() }
-    // dataSources
-    single { getProductRemoteDataSource(get(), get(), get()) }
-    // repo
-    single { getProductRepository(get()) }
-}
+@Module
+@InstallIn(ActivityRetainedComponent::class)
+abstract class RepositoryModule {
 
-private fun getProductRepository(productRemoteDataSource: ProductRemoteDataSource): ProductRepository {
-    return ProductRepositoryImpl(productRemoteDataSource)
-}
+    @Binds
+    abstract fun bindProductRemoteDataSource(productRemoteDataSourceImpl: ProductRemoteDataSourceImpl): ProductRemoteDataSource
 
-private fun getProductRemoteDataSource(productApi: ProductApi, productPreviewMapper: ProductPreviewMapper, productDetailMapper: ProductDetailMapper): ProductRemoteDataSource {
-    return ProductRemoteDataSourceImpl(productApi, productPreviewMapper, productDetailMapper)
+    @Binds
+    abstract fun bindProductRepository(productRepositoryImpl: ProductRepositoryImpl): ProductRepository
+
+    @Binds
+    abstract fun bindCategoryRemoteDataSource(categoryRemoteDataSourceImpl: CategoryRemoteDataSourceImpl): CategoryRemoteDataSource
+
+    @Binds
+    abstract fun bindCategoryRepository(categoryRepositoryImpl: CategoryRepositoryImpl): CategoryRepository
 }

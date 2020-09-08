@@ -8,8 +8,9 @@ import com.jgarcia.domain.util.ErrorType
 import com.jgarcia.domain.util.Result
 import java.io.IOException
 import java.lang.Exception
+import javax.inject.Inject
 
-class ProductRepositoryImpl(private val productRemoteDataSource: ProductRemoteDataSource) : ProductRepository {
+class ProductRepositoryImpl @Inject constructor(private val productRemoteDataSource: ProductRemoteDataSource) : ProductRepository {
 
     override suspend fun getProductsByQuery(term: String): Result<List<ProductPreview>> {
         return try {

@@ -1,4 +1,3 @@
 package com.jgarcia.domain.model
 
-class ProductDetail {
-}
+data class ProductDetail(val title: String)

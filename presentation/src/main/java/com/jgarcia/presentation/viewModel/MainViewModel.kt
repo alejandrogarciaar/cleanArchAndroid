@@ -1,5 +1,6 @@
 package com.jgarcia.presentation.viewModel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainViewModel(
+class MainViewModel @ViewModelInject constructor(
     private val getProductsByQuery: GetProductsByQuery,
     private val getProductsByCategory: GetProductsByCategory,
     private val getCurrentCategories: GetCurrentCategories

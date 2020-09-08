@@ -6,8 +6,9 @@ import com.jgarcia.data.mappers.ProductPreviewMapper
 import com.jgarcia.domain.model.ProductDetail
 import com.jgarcia.domain.model.ProductPreview
 import com.jgarcia.remotedata.api.ProductApi
+import javax.inject.Inject
 
-class ProductRemoteDataSourceImpl(
+class ProductRemoteDataSourceImpl @Inject constructor(
     private val productApi: ProductApi,
     private val productPreviewMapper: ProductPreviewMapper,
     private val productDetailMapper: ProductDetailMapper
