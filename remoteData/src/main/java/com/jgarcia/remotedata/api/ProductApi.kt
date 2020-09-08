@@ -13,7 +13,7 @@ interface ProductApi {
     suspend fun getProductsByQuery(
         @Path("siteId") siteId: String = Url.DEFAULT_SITE,
         @Query("q") query: String
-    ): List<ProductResponse>
+    ): ProductResponse
 
     @GET(Url.SEARCH_PATH)
     suspend fun getProductsByCategory(

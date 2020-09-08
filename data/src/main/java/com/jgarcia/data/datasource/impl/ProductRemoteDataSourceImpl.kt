@@ -15,14 +15,15 @@ class ProductRemoteDataSourceImpl @Inject constructor(
 ) : ProductRemoteDataSource {
 
     override suspend fun getProductsByQuery(term: String): List<ProductPreview> {
-        return productApi.getProductsByQuery(query = term).map {
+        val productsByQuery = productApi.getProductsByQuery(query = term)
+        return productsByQuery.results.map {
             productPreviewMapper.invoke(it)
         }
     }
 
     override suspend fun getProductsByCategory(categoryId: String): List<ProductPreview> {
         return productApi.getProductsByCategory(categoryId = categoryId).map {
-            productPreviewMapper.invoke(it)
+            ProductPreview()
         }
     }
 

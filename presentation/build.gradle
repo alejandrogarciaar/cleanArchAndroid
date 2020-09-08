@@ -58,7 +58,6 @@ dependencies {
     def lifecycle_version_ktx = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version_ktx"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version_ktx"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version_ktx"
 
     // nav graph
     def nav_version_ktx = "2.3.0"

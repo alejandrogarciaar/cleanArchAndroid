@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.jgarcia.domain.model.ProductPreview
 import com.jgarcia.domain.util.Result
 import com.jgarcia.presentation.databinding.FragmentProductListByQueryBinding
 import com.jgarcia.presentation.viewModel.MainViewModel
@@ -15,8 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ProductListFragment : Fragment() {
 
-    private lateinit var fragmentProductListByQueryBinding: FragmentProductListByQueryBinding
     private val mainViewModel by activityViewModels<MainViewModel>()
+    private lateinit var fragmentProductListByQueryBinding: FragmentProductListByQueryBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentProductListByQueryBinding = FragmentProductListByQueryBinding.inflate(inflater, container, false)
@@ -42,7 +41,14 @@ class ProductListFragment : Fragment() {
         mainViewModel.getProductList().observe(viewLifecycleOwner, { result ->
             when (result) {
                 is Result.Loading -> showLoader()
-                is Result.Success -> populateList(result.data)
+                is Result.Success -> {
+                    if (result.data.isNotEmpty()) {
+                        //adapter
+                        showProductListView()
+                    } else {
+
+                    }
+                }
                 is Result.Error -> showError()
             }
         })
@@ -60,9 +66,9 @@ class ProductListFragment : Fragment() {
         fragmentProductListByQueryBinding.rvProductList.visibility = View.GONE
     }
 
-    private fun populateList(productList: List<ProductPreview>) {
-        if (productList.isNotEmpty()) {
-
-        }
+    private fun showProductListView() {
+        fragmentProductListByQueryBinding.loadingContainer.root.visibility = View.GONE
+        fragmentProductListByQueryBinding.errorContainer.root.visibility = View.GONE
+        fragmentProductListByQueryBinding.rvProductList.visibility = View.VISIBLE
     }
 }
