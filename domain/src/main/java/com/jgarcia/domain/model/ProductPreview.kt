@@ -6,5 +6,5 @@ data class ProductPreview(
     val price: Double? = null,
     val thumbnailUrl: String? = null,
     val currency: String? = null,
-    val hasFreeShipping: Boolean? = null
+    val hasFreeShipping: Boolean = false
 )
