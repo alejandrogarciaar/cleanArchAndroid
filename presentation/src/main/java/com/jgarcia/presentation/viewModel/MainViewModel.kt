@@ -6,9 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jgarcia.domain.model.Category
+import com.jgarcia.domain.model.ProductDetail
 import com.jgarcia.domain.model.ProductPreview
 import com.jgarcia.domain.util.Result
 import com.jgarcia.usecases.GetCurrentCategories
+import com.jgarcia.usecases.GetProductDetail
 import com.jgarcia.usecases.GetProductsByCategory
 import com.jgarcia.usecases.GetProductsByQuery
 import kotlinx.coroutines.Dispatchers
@@ -17,15 +19,19 @@ import kotlinx.coroutines.withContext
 
 class MainViewModel @ViewModelInject constructor(
     private val getProductsByQuery: GetProductsByQuery,
+    private val getProductDetail: GetProductDetail,
     private val getProductsByCategory: GetProductsByCategory,
     private val getCurrentCategories: GetCurrentCategories
 ) : ViewModel() {
 
     private val productsLiveData: MutableLiveData<Result<List<ProductPreview>>> = MutableLiveData()
     private val productsByCategoryLiveData: MutableLiveData<Result<List<ProductPreview>>> = MutableLiveData()
+    private val productDetailLiveData: MutableLiveData<Result<ProductDetail>> = MutableLiveData()
     private val categoriesLiveData: MutableLiveData<Result<List<Category>>> = MutableLiveData()
 
     fun getProductList(): LiveData<Result<List<ProductPreview>>> = productsLiveData
+
+    fun getProductDetail(): LiveData<Result<ProductDetail>> = productDetailLiveData
 
     fun getProductsByCategoryList(): LiveData<Result<List<ProductPreview>>> = productsByCategoryLiveData
 
@@ -37,6 +43,16 @@ class MainViewModel @ViewModelInject constructor(
                 productsLiveData.postValue(Result.Loading)
                 val currentProducts = getProductsByQuery.invoke(query)
                 productsLiveData.postValue(currentProducts)
+            }
+        }
+    }
+
+    fun getProductDetail(productId: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                productDetailLiveData.postValue(Result.Loading)
+                val productDetail = getProductDetail.invoke(productId)
+                productDetailLiveData.postValue(productDetail)
             }
         }
     }

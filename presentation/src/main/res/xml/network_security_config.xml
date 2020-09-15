@@ -3,5 +3,6 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">api.mercadolibre.com</domain>
         <domain includeSubdomains="true">mco-s1-p.mlstatic.com</domain>
+        <domain includeSubdomains="true">mco-s2-p.mlstatic.com</domain>
     </domain-config>
 </network-security-config>

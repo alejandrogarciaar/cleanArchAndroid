@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jgarcia.domain.model.ProductPreview
-import com.jgarcia.presentation.databinding.LayoutProductPreviewItemBinding
+import com.jgarcia.presentation.databinding.LayoutProductPreviewTemplateBinding
 import com.jgarcia.presentation.util.loadImageFromPath
 
 class ProductListAdapter(private val onItemClicked: (productPreview: ProductPreview) -> Unit) : RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder>() {
@@ -13,7 +13,7 @@ class ProductListAdapter(private val onItemClicked: (productPreview: ProductPrev
     private var productsList: ArrayList<ProductPreview> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductListViewHolder {
-        val itemBinding = LayoutProductPreviewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemBinding = LayoutProductPreviewTemplateBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductListViewHolder(itemBinding)
     }
 
@@ -33,12 +33,12 @@ class ProductListAdapter(private val onItemClicked: (productPreview: ProductPrev
         this.notifyDataSetChanged()
     }
 
-    class ProductListViewHolder(private val layoutProductPreviewItemBinding: LayoutProductPreviewItemBinding) : RecyclerView.ViewHolder(layoutProductPreviewItemBinding.root) {
+    class ProductListViewHolder(private val layoutProductPreviewTemplateBinding: LayoutProductPreviewTemplateBinding) : RecyclerView.ViewHolder(layoutProductPreviewTemplateBinding.root) {
         fun bind(productPreview: ProductPreview) {
-            layoutProductPreviewItemBinding.tvTitle.text = productPreview.title
-            layoutProductPreviewItemBinding.tvPrice.text = "$${productPreview.price}"
-            layoutProductPreviewItemBinding.tvFreeShipping.visibility = if (productPreview.hasFreeShipping) View.VISIBLE else View.GONE
-            productPreview.thumbnailUrl?.let { layoutProductPreviewItemBinding.ivThumbnail.loadImageFromPath(it) }
+            layoutProductPreviewTemplateBinding.tvTitle.text = productPreview.title
+            layoutProductPreviewTemplateBinding.tvPrice.text = "$${productPreview.price}"
+            layoutProductPreviewTemplateBinding.tvFreeShipping.visibility = if (productPreview.hasFreeShipping) View.VISIBLE else View.GONE
+            productPreview.thumbnailUrl?.let { layoutProductPreviewTemplateBinding.ivThumbnail.loadImageFromPath(it) }
         }
     }
 }

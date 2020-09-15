@@ -6,6 +6,7 @@ import com.jgarcia.data.mappers.ProductPreviewMapper
 import com.jgarcia.domain.model.ProductDetail
 import com.jgarcia.domain.model.ProductPreview
 import com.jgarcia.remotedata.api.ProductApi
+import com.jgarcia.remotedata.models.FeaturesAndDescriptionResponse
 import javax.inject.Inject
 
 class ProductRemoteDataSourceImpl @Inject constructor(
@@ -21,14 +22,18 @@ class ProductRemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getProductDetail(productId: String): ProductDetail {
+        val specificProductResponse = productApi.getSpecificProduct(productId = productId)
+        var featuresAndDescriptionResponse: FeaturesAndDescriptionResponse? = null
+        specificProductResponse.catalogProductId?.let {
+            featuresAndDescriptionResponse = productApi.getFeaturesAndDescriptions(it)
+        }
+        return productDetailMapper.invoke(specificProductResponse, featuresAndDescriptionResponse)
+    }
+
     override suspend fun getProductsByCategory(categoryId: String): List<ProductPreview> {
         return productApi.getProductsByCategory(categoryId = categoryId).map {
             ProductPreview()
         }
-    }
-
-    override suspend fun getProductDetail(productId: String): ProductDetail {
-        val productDetailResponse = productApi.getSpecificProduct(productId = productId)
-        return productDetailMapper.invoke(productDetailResponse)
     }
 }

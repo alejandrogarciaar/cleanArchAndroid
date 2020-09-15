@@ -2,7 +2,7 @@ package com.jgarcia.remotedata.models
 
 import com.google.gson.annotations.SerializedName
 
-data class ProductResponse(
+data class ProductsQueryResponse(
     val query: String,
     val results: List<ProductViewResponse>
 ) {
