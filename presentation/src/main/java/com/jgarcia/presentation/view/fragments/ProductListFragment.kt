@@ -1,9 +1,7 @@
 package com.jgarcia.presentation.view.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -12,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jgarcia.domain.model.ProductPreview
 import com.jgarcia.domain.util.Result
+import com.jgarcia.presentation.R
 import com.jgarcia.presentation.databinding.FragmentProductListByQueryBinding
 import com.jgarcia.presentation.util.hideKeyboard
 import com.jgarcia.presentation.view.adapters.ProductListAdapter
@@ -19,22 +18,18 @@ import com.jgarcia.presentation.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProductListFragment : Fragment() {
+class ProductListFragment : Fragment(R.layout.fragment_product_list_by_query) {
 
     private val mainViewModel by activityViewModels<MainViewModel>()
     private lateinit var fragmentProductListByQueryBinding: FragmentProductListByQueryBinding
     private lateinit var productListAdapter: ProductListAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        fragmentProductListByQueryBinding = FragmentProductListByQueryBinding.inflate(inflater, container, false)
-        return fragmentProductListByQueryBinding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fragmentProductListByQueryBinding = FragmentProductListByQueryBinding.bind(view)
         setListeners()
         setItemDecoration()
-        setBuilder()
+        setAdapter()
         addSubscriptions()
     }
 
@@ -54,7 +49,7 @@ class ProductListFragment : Fragment() {
         }
     }
 
-    private fun setBuilder() {
+    private fun setAdapter() {
         productListAdapter = ProductListAdapter { navigateToDetailView(it) }
         fragmentProductListByQueryBinding.rvProductList.adapter = productListAdapter
     }
